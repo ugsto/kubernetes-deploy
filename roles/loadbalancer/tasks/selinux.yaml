@@ -1,0 +1,9 @@
+---
+- name: Setbool HAProxy
+  seboolean:
+    name: haproxy_connect_any
+    state: yes
+    persistent: yes
+  when: ansible_selinux.status == "enabled"
+  become: true
+  become_user: root

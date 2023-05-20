@@ -1,0 +1,38 @@
+---
+- name: Install HAProxy
+  package:
+    name: haproxy
+    state: latest
+  become: true
+  become_user: root
+
+- name: Configure HAProxy
+  template:
+    src: haproxy.cfg.j2
+    dest: /etc/haproxy/haproxy.cfg
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  become_user: root
+
+- name: Allow SELinux HAProxy
+  include_tasks: selinux.yaml
+
+- name: Ensure HAProxy socker directory exists
+  file:
+    path: /run/haproxy
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+  become_user: root
+
+- name: Reload HAProxy
+  service:
+    name: haproxy
+    state: reloaded
+    enabled: true
+  become: true
+  become_user: root

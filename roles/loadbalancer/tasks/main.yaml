@@ -1,0 +1,3 @@
+---
+- name: Setup HAProxy
+  include_tasks: haproxy.yaml
