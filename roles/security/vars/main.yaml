@@ -1,0 +1,26 @@
+---
+ports:
+  loadbalancer:
+    - port: 6443
+      protocol: tcp
+      name: Kubernetes API
+  master:
+    - port: 2379-2380
+      protocol: tcp
+      name: etcd server client API
+    - port: 10250
+      protocol: tcp
+      name: Kubelet API
+    - port: 10251
+      protocol: tcp
+      name: kube-scheduler
+    - port: 10252
+      protocol: tcp
+      name: kube-controller-manager
+  worker:
+    - port: 10250
+      protocol: tcp
+      name: Kubelet API
+    - port: 30000-32767
+      protocol: tcp
+      name: NodePort Services

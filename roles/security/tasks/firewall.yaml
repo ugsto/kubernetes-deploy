@@ -1,0 +1,38 @@
+---
+- name: Install Firewall
+  package:
+    name: firewalld
+    state: latest
+  become: true
+  become_user: root
+
+- name: Import ports variable
+  include_vars: main.yaml
+
+- name: Select ports
+  set_fact:
+    ports: |-
+      {{
+        (ports['loadbalancer'] if inventory_hostname == 'loadbalancer' else [])
+        + (ports['master'] if inventory_hostname == 'master' else [])
+        + (ports['node'] if inventory_hostname == 'node' else [])
+      }}
+
+- name: Configure Firewall
+  template:
+    src: firewall.j2
+    dest: /etc/firewalld/services/kubernetes.xml
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  become_user: root
+
+- name: Reload Firewall
+  service:
+    name: firewalld
+    state: reloaded
+    enabled: true
+    daemon_reload: true
+  become: true
+  become_user: root
