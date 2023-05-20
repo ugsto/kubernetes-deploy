@@ -5,7 +5,7 @@
   hosts:
     - loadbalancer
     - master
-    - node
+    - worker 
   roles:
     - role: system
     - role: security
