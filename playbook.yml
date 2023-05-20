@@ -1,0 +1,17 @@
+---
+- name: Kubernetes
+  vars_files:
+    - vars/main.yaml
+  hosts:
+    - loadbalancer
+    - master
+    - node
+  roles:
+    - role: system
+    - role: security
+    - role: loadbalancer
+      when: inventory_hostname == 'loadbalancer'
+    - role: master
+      when: inventory_hostname == 'master'
+    - role: node
+      when: inventory_hostname == 'node'
