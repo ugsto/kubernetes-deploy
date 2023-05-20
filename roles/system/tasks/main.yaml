@@ -12,11 +12,7 @@
   become_user: root
 
 - name: Restart if package updated
-  reboot:
-    connect_timeout: 5
-    reboot_timeout: 300
-    reboot_timeout: 300
-    msg: "Reboot initiated by Ansible for package updates."
+  reboot: {}
   when: update is changed
   become: true
   become_user: root
