@@ -1,5 +1,5 @@
 ---
-- name: Install Firewall
+- name: Install Firewalld
   package:
     name: firewalld
     state: latest
@@ -18,7 +18,7 @@
         + (ports['worker'] if ansible_host in groups['worker'] else [])
       }}
 
-- name: Configure Firewall
+- name: Configure Firewalld
   template:
     src: firewall.j2
     dest: /etc/firewalld/services/kubernetes.xml
@@ -28,7 +28,7 @@
   become: true
   become_user: root
 
-- name: Reload Firewall
+- name: Reload Firewalld
   service:
     name: firewalld
     state: reloaded
