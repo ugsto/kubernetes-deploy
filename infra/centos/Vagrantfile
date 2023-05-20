@@ -1,0 +1,29 @@
+def config_node(node, ip, hostname, memory=2048, cpus=2)
+  node.vm.box = "centos/8"
+  node.vm.provider "virtualbox" do |v|
+    v.memory = memory
+    v.cpus = cpus
+  end
+  node.vm.hostname = hostname
+  node.vm.network "private_network", ip: ip
+
+  node.vm.provision "file", source: "~/.ssh/vagrant.pub", destination: "/home/vagrant/.ssh/authorized_keys"
+end
+
+Vagrant.configure("2") do |config|
+  config.vm.define "loadbalancer" do |node|
+    config_node(node, "192.168.56.2", "loadbalancer", 512, 1)
+  end
+
+  (0..2).each do |i|
+    config.vm.define "master#{i}" do |node|
+      config_node(node, "192.168.56.#{i+10}", "master#{i}")
+    end
+  end
+
+#  (0..2).each do |i|
+#    config.vm.define "worker#{i}" do |node|
+#      config_node(node, "192.168.56.#{i+20}", "worker#{i}")
+#    end
+#  end
+end
