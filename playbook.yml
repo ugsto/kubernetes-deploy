@@ -11,7 +11,11 @@
     - role: security
     - role: loadbalancer
       when: ansible_host in groups['loadbalancer']
+    - role: kubernetes
+      when: ansible_host in groups['master'] or ansible_host in groups['worker']
     - role: master
       when: ansible_host in groups['master']
     - role: worker
       when: ansible_host in groups['worker']
+    - role: controlplane
+      when: ansible_host == groups['master'][0]
