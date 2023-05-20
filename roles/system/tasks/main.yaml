@@ -1,0 +1,11 @@
+---
+- name: Cover CentOS edge cases
+  include_tasks: centos.yaml
+  when: ansible_facts['distribution'] == 'CentOS'
+
+- name: Update system
+  package:
+    name: "*"
+    state: latest
+  become: true
+  become_user: root
