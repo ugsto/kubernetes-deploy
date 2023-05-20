@@ -10,8 +10,8 @@
     - role: system
     - role: security
     - role: loadbalancer
-      when: inventory_hostname == 'loadbalancer'
+      when: ansible_host in groups['loadbalancer']
     - role: master
-      when: inventory_hostname == 'master'
-    - role: node
-      when: inventory_hostname == 'node'
+      when: ansible_host in groups['master']
+    - role: worker
+      when: ansible_host in groups['worker']
