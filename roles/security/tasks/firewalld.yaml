@@ -20,7 +20,7 @@
 
 - name: Configure Firewalld
   template:
-    src: firewall.j2
+    src: firewalld.j2
     dest: /etc/firewalld/services/kubernetes.xml
     owner: root
     group: root
