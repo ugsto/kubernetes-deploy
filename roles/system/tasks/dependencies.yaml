@@ -1,0 +1,9 @@
+---
+- name: Install dependencies for "{{ item.when }}"
+  package:
+    name: "{{ item.name }}"
+    state: present
+  become: true
+  become_user: root
+  when: "{{ item.when }}"
+  loop: "{{ dependencies }}"

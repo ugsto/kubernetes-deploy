@@ -1,0 +1,3 @@
+dependencies:
+  - name: policycoreutils-python-utils
+    when: "ansible_host in groups['loadbalancer']"

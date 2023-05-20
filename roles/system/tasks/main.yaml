@@ -1,18 +1,6 @@
 ---
-- name: Cover CentOS edge cases
-  include_tasks: centos.yaml
-  when: ansible_facts['distribution'] == 'CentOS'
-
 - name: Update system
-  package:
-    name: "*"
-    state: latest
-  register: update
-  become: true
-  become_user: root
+  include_tasks: update.yaml
 
-- name: Restart if package updated
-  reboot: {}
-  when: update is changed
-  become: true
-  become_user: root
+- name: Install dependencies
+  include_tasks: dependencies.yaml
