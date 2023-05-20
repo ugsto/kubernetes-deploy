@@ -46,7 +46,7 @@
 * Install and configure the ingress controller (Kong);
 * Install and configure the container registry (Harbor);
 
-### Node
+### Worker
 
 #### System
 
