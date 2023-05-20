@@ -1,4 +1,4 @@
-HOSTS=hosts.ini
+HOSTS=hosts
 EXEC=/usr/bin/env
 
 deploy:
