@@ -13,9 +13,9 @@
   set_fact:
     ports: |-
       {{
-        (ports['loadbalancer'] if inventory_hostname == 'loadbalancer' else [])
-        + (ports['master'] if inventory_hostname == 'master' else [])
-        + (ports['node'] if inventory_hostname == 'node' else [])
+        (ports['loadbalancer'] if ansible_host in groups['loadbalancer'] else [])
+        + (ports['master'] if ansible_host in groups['master'] else [])
+        + (ports['worker'] if ansible_host in groups['worker'] else [])
       }}
 
 - name: Configure Firewall

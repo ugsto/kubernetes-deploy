@@ -2,7 +2,7 @@
 <service>
   <short>Kubernetes</short>
   <description>Kubernetes</description>
-  {% for port in ports %}
+{% for port in ports %}
   <port protocol="{{ port.protocol }}" port="{{ port.port }}"/>
-  {% endfor %}
+{% endfor %}
 </service>
