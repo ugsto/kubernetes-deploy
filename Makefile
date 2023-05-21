@@ -10,4 +10,4 @@ trust:
 install:
 	$(EXEC) ansible-galaxy install -r requirements.yml
 
-.PHONY: deploy trust
+.PHONY: deploy trust install
