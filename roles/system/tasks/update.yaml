@@ -1,6 +1,6 @@
 ---
 - name: Cover CentOS edge cases
-  include_tasks: centos.yaml
+  include_tasks: update/centos.yaml
   when: ansible_facts['distribution'] == 'CentOS'
 
 - name: Update system

@@ -1,7 +1,7 @@
 ---
 - name: Install dependencies for "{{ item.when }}"
   package:
-    name: "{{ item.name }}"
+    name: "{{ item.packages | join(',') }}"
     state: present
   become: true
   become_user: root

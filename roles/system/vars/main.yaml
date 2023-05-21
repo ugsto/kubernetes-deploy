@@ -1,3 +1,20 @@
 dependencies:
-  - name: policycoreutils-python-utils
+  - name: selinux
+    packages:
+      - policycoreutils-python-utils
     when: "ansible_host in groups['loadbalancer']"
+
+  - name: cri-o debian
+    packages:
+      - software-properties-common
+      - apt-transport-https
+      - ca-certificates
+      - curl
+    when: "(ansible_host in groups['master'] or ansible_host in groups['worker']) and ansible_os_family == 'Debian'"
+
+  - name: cri-o rhel
+    packages:
+      - yum-utils
+      - device-mapper-persistent-data
+      - lvm2
+    when: "(ansible_host in groups['master'] or ansible_host in groups['worker']) and ansible_os_family == 'RedHat'"
