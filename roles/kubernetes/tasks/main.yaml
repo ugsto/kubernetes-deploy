@@ -1,0 +1,18 @@
+---
+- name: Disable swap
+  include_tasks: swap.yaml
+
+- name: Configure SELinux
+  include_tasks: selinux.yaml
+
+- name: Enable modules
+  include_tasks: modules.yaml
+
+- name: Enable sysctl
+  include_tasks: sysctl.yaml
+
+- name: Setup Container Runtime (CRI-O)
+  include_tasks: cri-o.yaml
+
+- name: Install Kubeadm
+  include_tasks: kubeadm.yaml

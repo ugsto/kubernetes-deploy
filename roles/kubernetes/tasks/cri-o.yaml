@@ -1,0 +1,43 @@
+---
+- name: Include CRI-O repository (RHEL based)
+  include_tasks: cri-o/rhel.yaml
+  when: ansible_os_family == 'RedHat'
+
+- name: Include CRI-O repository (Debian based)
+  include_tasks: cri-o/debian.yaml
+  when: ansible_os_family == 'Debian'
+
+- name: Install CRI-O
+  package:
+    name: cri-o
+    state: present
+  become: true
+  become_user: root
+
+- name: Ensure CRI-O config directory exists
+  file:
+    path: /etc/crio/crio.conf.d
+    state: directory
+    owner: root
+    group: root
+    mode: 0755
+  become: true
+  become_user: root
+
+- name: Configure CRI-O
+  copy:
+    src: cri-o.conf
+    dest: /etc/crio/crio.conf.d/99-k8s.conf
+    owner: root
+    group: root
+    mode: 0644
+  become: true
+  become_user: root
+
+- name: Reload CRI-O
+  service:
+    name: crio
+    state: reloaded
+    enabled: true
+  become: true
+  become_user: root

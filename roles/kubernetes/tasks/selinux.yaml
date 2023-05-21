@@ -1,0 +1,7 @@
+---
+- name: Set SELinux in permisive mode
+  ansible.posix.selinux:
+    policy: targeted
+    state: permissive
+  become: true
+  become_user: root

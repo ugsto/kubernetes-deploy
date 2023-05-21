@@ -1,0 +1,14 @@
+---
+- name: Add CRI-O repository key
+  apt_key:
+    url: https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ ansible_distribution_release }}/Release.key
+    state: present
+  become: true
+  become_user: root
+
+- name: Add CRI-O repository
+  apt_repository:
+    repo: deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ ansible_distribution_release }}/ / 
+    state: present
+  become: true
+  become_user: root

@@ -1,0 +1,15 @@
+---
+- name: Enable modules
+  modprobe:
+    name: "{{ item }}"
+    state: present
+  loop: "{{ modules }}"
+  become: true
+  become_user: root
+
+- name: Create modules configuration
+  template:
+    src: modules.conf.j2
+    dest: /etc/modules-load.d/k8s.conf
+  become: true
+  become_user: root

@@ -1,0 +1,17 @@
+---
+- name: Disable swap
+  mount:
+    name: swap
+    fstype: swap
+    state: absent
+  when: ansible_swaptotal_mb > 0
+  become: true
+  become_user: root
+
+- name: Remove swap from fstab
+  lineinfile:
+    path: /etc/fstab
+    regexp: 'swap'
+    state: absent
+  become: true
+  become_user: root

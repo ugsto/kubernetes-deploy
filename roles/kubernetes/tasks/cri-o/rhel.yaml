@@ -1,0 +1,29 @@
+---
+- name: Add CRI-O repository if not already present
+  get_url:
+    url: "{{ item[1] }}"
+    dest: /etc/yum.repos.d/{{ item[0] }}
+  loop:
+    - 
+      - devel:kubic:libcontainers:stable.repo
+      - https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version'] }}/devel:kubic:libcontainers:stable.repo
+    - 
+      - devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}.repo
+      - https://download.opensuse.org/repositories/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}/{{ ansible_facts['distribution'] }}_{{ ansible_facts['distribution_major_version'] }}/devel:kubic:libcontainers:stable:cri-o:{{ crio_version }}.repo
+  become: true
+  become_user: root
+
+- name: Update repository cache
+  dnf:
+    name: '*'
+    state: latest
+    download_only: true
+  become: true
+  become_user: root
+
+- name: Install containernetworking-plugins
+  package:
+    name: containernetworking-plugins
+    state: present
+  become: true
+  become_user: root
